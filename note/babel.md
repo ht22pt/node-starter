@@ -2,10 +2,17 @@
 
 Package need for star debug babel in vs code
 
+Need install babel in global
+
+```
+npm install --global babel
+```
+
 ```json
   "devDependencies": {
     "babel-cli": "^6.24.1",
     "babel-core": "^6.25.0",
+    "babel-eslint": "^7.2.3",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-plugin-transform-export-extensions": "^6.22.0",
     "babel-plugin-transform-flow-strip-types": "^6.22.0",
@@ -15,6 +22,27 @@ Package need for star debug babel in vs code
     "babel-preset-latest": "^6.24.1",
     "babel-register": "^6.24.1",
   },
+```
+
+Settings in .babelrc
+
+```json
+{
+  "presets": [
+    ["env", {
+      "targets": {
+        "node": "current"
+      }
+    }],
+  ],
+  "plugins": [
+    "transform-class-properties",
+    "transform-export-extensions",
+    "transform-flow-strip-types",
+    "transform-object-rest-spread"
+  ]
+}
+
 ```
 
 In package.json need add
