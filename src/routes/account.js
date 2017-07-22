@@ -73,12 +73,16 @@ loginProviders.forEach(({ provider, options }) => {
     (req, res, next) => { req.session.returnTo = getSuccessRedirect(req); next(); },
     passport.authenticate(provider, { failureFlash: true, ...options }));
 
-  router.get(`/login/${provider}/return`, (req, res, next) =>
-    passport.authenticate(provider, {
+  router.get(`/login/${provider}/return`, (req, res, next) => {
+    console.log(`Login ${provider}`);
+    return passport.authenticate(provider, {
       successReturnToOrRedirect: true,
       failureFlash: true,
       failureRedirect: `${getOrigin(req.session.returnTo)}/login`,
-    })(req, res, next));
+    })(req, res, next)
+  }
+
+  );
 });
 
 // Remove the `user` object from the session. Example:

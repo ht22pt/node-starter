@@ -72,6 +72,7 @@
     "test-watch": "mocha --compilers js:babel-register --reporter min --watch",
     "build": "node tools/build.js",
     "build-watch": "node tools/build.js --watch",
+    "build-babel": "babel src -d dist --watch --source-maps",
     "db-version": "node tools/db.js version",
     "db-migrate": "node tools/db.js migrate",
     "db-rollback": "node tools/db.js rollback",

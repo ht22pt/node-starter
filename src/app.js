@@ -76,6 +76,7 @@ app.use(flash());
 app.use(accountRoutes);
 
 app.get('/graphql/schema', (req, res) => {
+  console.log("test");
   res.type('text/plain').send(printSchema(schema));
 });
 
@@ -100,6 +101,7 @@ app.use('/graphql', expressGraphQL(req => ({
 if (process.env.NODE_ENV !== 'production') {
   // A route for testing email templates
   app.get('/:email(email|emails)/:template', (req, res) => {
+    console.log("Demo");
     const message = email.render(req.params.template, { t: req.t, v: 123 });
     res.send(message.html);
   });
@@ -109,7 +111,7 @@ if (process.env.NODE_ENV !== 'production') {
     if (req.user) {
       res.send(`<p>${req.t('Welcome, {{user}}!', { user: req.user.displayName })} (<a href="javascript:fetch('/login/clear', { method: 'POST', credentials: 'include' }).then(() => window.location = '/')">${req.t('log out')}</a>)</p>`);
     } else {
-      res.send(`<p>${req.t('Welcome, guest!')} (<a href="/login/facebook">${req.t('sign in')}</a>)</p>`);
+      res.send(`<p>${req.t('Welcome, guest!')} (<a href="/login/facebook">${req.t('sign in facebook')}</a>)</p>`);
     }
   });
 }

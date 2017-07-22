@@ -14,7 +14,7 @@ import app from './app';
 import db from './db';
 import redis from './redis';
 
-const port = process.env.PORT || 8080;
+const port = process.env.PORT || 80;
 const host = process.env.HOSTNAME || '0.0.0.0';
 
 // Launch Node.js server

@@ -24,6 +24,18 @@ npm install --global babel
   },
 ```
 
+Add build babel source maps
+
+```
+"build-babel": "babel src -d dist --watch --source-maps"
+```
+
+And run before start debug
+
+```
+npm run build-babel
+```
+
 Settings in .babelrc
 
 ```json
@@ -67,11 +79,12 @@ Configuration for start debug
     "name": "Debug Source",
     "program": "${workspaceRoot}/src/server.js",
     "cwd": "${workspaceRoot}",
+    "outDir": "${workspaceRoot}/dist",
     "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/babel-node",
     "runtimeArgs": [
       "--nolazy"
     ],
-    "sourceMaps": false,
+    "sourceMaps": true,
     "env": {
       "CORS_ORIGIN":     "http://localhost:3001,http://localhost:3000",
       "DATABASE_URL":    "postgres://postgres@127.0.0.1:5432/opla_demo1",
