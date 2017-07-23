@@ -111,7 +111,10 @@ if (process.env.NODE_ENV !== 'production') {
     if (req.user) {
       res.send(`<p>${req.t('Welcome, {{user}}!', { user: req.user.displayName })} (<a href="javascript:fetch('/login/clear', { method: 'POST', credentials: 'include' }).then(() => window.location = '/')">${req.t('log out')}</a>)</p>`);
     } else {
-      res.send(`<p>${req.t('Welcome, guest!')} (<a href="/login/facebook">${req.t('sign in facebook')}</a>)</p>`);
+      res.send(`<p>${req.t('Welcome, guest!')} </p>
+        <p>(<a href="/login/facebook">${req.t('sign in facebook')}</a>)</p>
+        <p>(<a href="/login/google">${req.t('sign in google')}</a>)</p>
+        <p>(<a href="/login/twitter">${req.t('sign in twitter')}</a>)</p>`);
     }
   });
 }

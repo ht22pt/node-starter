@@ -19,10 +19,10 @@
       "SESSION_SECRET":  "wZjwhFtzQsd7r87W6AZw45Sm",
       "FACEBOOK_ID":     "105071360168821",
       "FACEBOOK_SECRET": "81408e783f6322c04bcc7246fd4d85d9",
-      "GOOGLE_ID":       "536447408233-apfaoam0s2o9auul70bjfotu5b7def18.apps.googleusercontent.com",
-      "GOOGLE_SECRET":   "AEBnNpaMxVxVlvNyzJwBdoJw",
-      "TWITTER_KEY":     "OcHCaDqUhjXMIIKKjkBIG7EDr",
-      "TWITTER_SECRET":  "4svE6BRCdUfUjjloRAX5KNjVZ5qnOsrbTtojmbENAZ5rpjfSyM"
+      "GOOGLE_ID":       "249264685846-9oierc74oa8lvcktam209b5d9utm98hf.apps.googleusercontent.com",
+      "GOOGLE_SECRET":   "HTFr0mQnNOumNFy0KIN6o3ip",
+      "TWITTER_KEY":     "etKrqazREK5aJB3qHOgM72tyV",
+      "TWITTER_SECRET":  "DAYNo97iSVlIwKrldVFFEuFwuo5JoNiyxQwPTPOuDLqvMcU9PE"
     }
   },
     {
@@ -41,15 +41,15 @@
     "env": {
       "CORS_ORIGIN":     "http://localhost:3001,http://localhost:3000",
       "DATABASE_URL":    "postgres://postgres:demo@127.0.0.1:5432/opla_demo1",
-      "DATABASE_DEBUG":  "false",
+      "DATABASE_DEBUG":  "true",
       "REDIS_URL":       "redis://127.0.0.1:6379/0",
       "SESSION_SECRET":  "wZjwhFtzQsd7r87W6AZw45Sm",
       "FACEBOOK_ID":     "105071360168821",
       "FACEBOOK_SECRET": "81408e783f6322c04bcc7246fd4d85d9",
-      "GOOGLE_ID":       "536447408233-apfaoam0s2o9auul70bjfotu5b7def18.apps.googleusercontent.com",
-      "GOOGLE_SECRET":   "AEBnNpaMxVxVlvNyzJwBdoJw",
-      "TWITTER_KEY":     "OcHCaDqUhjXMIIKKjkBIG7EDr",
-      "TWITTER_SECRET":  "4svE6BRCdUfUjjloRAX5KNjVZ5qnOsrbTtojmbENAZ5rpjfSyM"
+      "GOOGLE_ID":       "249264685846-9oierc74oa8lvcktam209b5d9utm98hf.apps.googleusercontent.com",
+      "GOOGLE_SECRET":   "HTFr0mQnNOumNFy0KIN6o3ip",
+      "TWITTER_KEY":     "etKrqazREK5aJB3qHOgM72tyV",
+      "TWITTER_SECRET":  "DAYNo97iSVlIwKrldVFFEuFwuo5JoNiyxQwPTPOuDLqvMcU9PE"
     }
   },
     {
