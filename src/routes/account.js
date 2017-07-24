@@ -81,7 +81,6 @@ loginProviders.forEach(({ provider, options }) => {
       failureRedirect: `${getOrigin(req.session.returnTo)}/login`,
     })(req, res, next)
   }
-
   );
 });
 

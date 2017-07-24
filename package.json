@@ -72,7 +72,7 @@
     "test-watch": "mocha --compilers js:babel-register --reporter min --watch",
     "build": "node tools/build.js",
     "build-watch": "node tools/build.js --watch",
-    "build-babel": "babel src -d dist -s --source-maps",
+    "build-babel": "babel src -d dist -s --source-maps inline",
     "build-db": "babel tools -d dist-tools -s --source-maps",
     "db-version": "node tools/db.js version",
     "db-migrate": "node tools/db.js migrate",
