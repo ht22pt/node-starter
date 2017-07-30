@@ -49,7 +49,8 @@
       "GOOGLE_ID":       "249264685846-9oierc74oa8lvcktam209b5d9utm98hf.apps.googleusercontent.com",
       "GOOGLE_SECRET":   "HTFr0mQnNOumNFy0KIN6o3ip",
       "TWITTER_KEY":     "etKrqazREK5aJB3qHOgM72tyV",
-      "TWITTER_SECRET":  "DAYNo97iSVlIwKrldVFFEuFwuo5JoNiyxQwPTPOuDLqvMcU9PE"
+      "TWITTER_SECRET":  "DAYNo97iSVlIwKrldVFFEuFwuo5JoNiyxQwPTPOuDLqvMcU9PE",
+      "ELASTIC_URL":     "http://localhost:9200"
     }
   },
     {
