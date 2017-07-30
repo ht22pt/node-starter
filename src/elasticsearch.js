@@ -6,30 +6,28 @@ const elasticClient = new elasticsearch.Client({
   log: 'info',
 });
 
-const indexName = 'randomindex';
-
-function deleteIndex() {
+function deleteIndex(index) {
   return elasticClient.indices.delete({
-    index: indexName,
+    index: index,
   });
 }
 
-function initIndex() {
+function initIndex(index) {
   return elasticClient.indices.create({
-    index: indexName,
+    index: index,
   });
 }
 
-function indexExists() {
+function indexExists(index) {
   return elasticClient.indices.exists({
-    index: indexName,
+    index: index,
   });
 }
 
 exports.indexExists = indexExists;
-function initMapping() {
+function initMapping(index) {
   return elasticClient.indices.putMapping({
-    index: indexName,
+    index: index,
     type: 'document',
     body: {
       properties: {
@@ -46,9 +44,9 @@ function initMapping() {
   });
 }
 
-function getSuggestions(input) {
+function getSuggestions(index, input) {
   return elasticClient.suggest({
-    index: indexName,
+    index: index,
     type: 'document',
     body: {
       docsuggest: {
@@ -62,9 +60,9 @@ function getSuggestions(input) {
   });
 }
 
-function addDocument(document) {
+function addDocument(index, document) {
   return elasticClient.index({
-    index: indexName,
+    index: index,
     type: 'document',
     body: {
       title: document.title,

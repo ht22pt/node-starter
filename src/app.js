@@ -98,17 +98,20 @@ app.use('/graphql', expressGraphQL(req => ({
 })));
 
 // For eslaticsearch
-const indexName = 'randomindex';
+
 var documents = require('./routes/documents');
+
+const indexName = 'randomindex';
 //......
 app.use('/documents', documents);
+
 var elastic = require('./elasticsearch');
-elastic.indexExists().then(function (exists) {
+elastic.indexExists(indexName).then(function (exists) {
   if (exists) {
-    return elastic.deleteIndex();
+    return elastic.deleteIndex(indexName);
   }
 }).then(function () {
-  return elastic.initIndex().then(elastic.initMapping).then(function () {
+  return elastic.initIndex(indexName).then(elastic.initMapping(indexName)).then(function () {
     //Add a few titles for the autocomplete
     //elasticsearch offers a bulk functionality as well, but this is for a different time
     var promises = [
@@ -118,7 +121,7 @@ elastic.indexExists().then(function (exists) {
       'The Hitchhikers Guide to the Galaxy',
       'Trial of the Clone'
     ].map(function (bookTitle) {
-      return elastic.addDocument({
+      return elastic.addDocument(indexName, {
         title: bookTitle,
         content: bookTitle + " content",
         metadata: {
@@ -129,6 +132,7 @@ elastic.indexExists().then(function (exists) {
     return Promise.all(promises);
   });
 });
+
 
 // The following routes are intended to be used in development mode only
 if (process.env.NODE_ENV !== 'production') {
