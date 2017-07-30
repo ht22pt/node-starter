@@ -8,33 +8,24 @@ const elasticClient = new elasticsearch.Client({
 
 const indexName = 'randomindex';
 
-/**
-* Delete an existing index
-*/
 function deleteIndex() {
   return elasticClient.indices.delete({
     index: indexName,
   });
 }
 
-/**
-* create the index
-*/
 function initIndex() {
   return elasticClient.indices.create({
     index: indexName,
   });
 }
 
-
-/**
-* check if the index exists
-*/
 function indexExists() {
   return elasticClient.indices.exists({
     index: indexName,
   });
 }
+
 exports.indexExists = indexExists;
 function initMapping() {
   return elasticClient.indices.putMapping({

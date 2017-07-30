@@ -98,6 +98,7 @@ app.use('/graphql', expressGraphQL(req => ({
 })));
 
 // For eslaticsearch
+const indexName = 'randomindex';
 var documents = require('./routes/documents');
 //......
 app.use('/documents', documents);
@@ -121,7 +122,7 @@ elastic.indexExists().then(function (exists) {
         title: bookTitle,
         content: bookTitle + " content",
         metadata: {
-          titleLength: bookTitle.length
+          titleLength: bookTitle.length,
         }
       });
     });
