@@ -3,7 +3,7 @@ import elasticsearch from 'elasticsearch';
 
 const elasticClient = new elasticsearch.Client({
   host: process.env.ELASTIC_URL,
-  log: 'info',
+  log: 'debug',
 });
 
 function deleteIndex(index) {
@@ -53,7 +53,11 @@ function getSuggestions(index, input) {
         text: input,
         completion: {
           field: 'suggest',
-          fuzzy: true,
+          fuzzy: {
+            fuzziness: 2,
+            min_length: 3,
+            prefix_length: 3,
+          },
         },
       },
     },

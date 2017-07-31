@@ -29,6 +29,7 @@ import passport from './passport';
 import schema from './schema';
 import DataLoaders from './DataLoaders';
 import accountRoutes from './routes/account';
+import elasticSearchMapping from './elasticsearch/mapping';
 
 i18next
   .use(LanguageDetector)
@@ -98,41 +99,7 @@ app.use('/graphql', expressGraphQL(req => ({
 })));
 
 // For eslaticsearch
-
-var documents = require('./routes/documents');
-
-const indexName = 'randomindex';
-//......
-app.use('/documents', documents);
-
-var elastic = require('./elasticsearch');
-elastic.indexExists(indexName).then(function (exists) {
-  if (exists) {
-    return elastic.deleteIndex(indexName);
-  }
-}).then(function () {
-  return elastic.initIndex(indexName).then(elastic.initMapping(indexName)).then(function () {
-    //Add a few titles for the autocomplete
-    //elasticsearch offers a bulk functionality as well, but this is for a different time
-    var promises = [
-      'Thing Explainer',
-      'The Internet Is a Playground',
-      'The Pragmatic Programmer',
-      'The Hitchhikers Guide to the Galaxy',
-      'Trial of the Clone'
-    ].map(function (bookTitle) {
-      return elastic.addDocument(indexName, {
-        title: bookTitle,
-        content: bookTitle + " content",
-        metadata: {
-          titleLength: bookTitle.length,
-        }
-      });
-    });
-    return Promise.all(promises);
-  });
-});
-
+app.use('/elasticsearch', elasticSearchMapping);
 
 // The following routes are intended to be used in development mode only
 if (process.env.NODE_ENV !== 'production') {
