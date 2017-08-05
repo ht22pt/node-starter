@@ -9,7 +9,7 @@ const indexName = 'articles';
 
 const mappingConfig = {
   index: indexName,
-  type: 'document',
+  type: 'articles',
   body: {
     properties: {
       title: { type: 'string' },
@@ -27,14 +27,12 @@ const mappingConfig = {
 function addDocument(document) {
   return elasticClient.index({
     index: indexName,
-    type: 'document',
+    type: 'articles',
     body: {
       title: document.title,
       content: document.content,
       suggest: {
         input: document.title.split(' '),
-        output: document.title,
-        payload: document.metadata || {}
       },
     },
   });
@@ -43,7 +41,7 @@ function addDocument(document) {
 function getSuggestions(input) {
   return elasticClient.suggest({
     index: indexName,
-    type: 'document',
+    type: 'articles',
     body: {
       docsuggest: {
         text: input,

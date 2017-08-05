@@ -6,6 +6,7 @@ This example to init db articles table and elastic search with attach to node st
 - Elasticsearch: [download from here](https://www.elastic.co/downloads/elasticsearch) (version 5.5.1)
 - Logstash (optional): [download from here](https://www.elastic.co/downloads/logstash) (version 5.5.1)
 - ElasticsearchFDW: tool for data wapper from PostgreSQL to Elasticsearch, [download from here](https://github.com/Mikulas/pg-es-fdw)
+- postgres-elasticsearch-fdw: (download here)[https://github.com/matthewfranglen/postgres-elasticsearch-fdw]
 
 **Note**: have many data wapper custom base on multicorn.
 
@@ -20,6 +21,17 @@ First step all tools run on default configuration
 - path: http://localhost:9200 and 9300
 
 **ElasticsearchFDW**: Using git for clone to prepare download, run command for build and install
+
+* Note: ElasticsearchFDW can't auto create index mapping in elasticsearch, must run starter before insert data
+
+```bash
+# Need python 2.7 and pip
+cd ElasticsearchFDW
+python setup.py build
+sudo python setup.py install
+```
+
+**postgres-elasticsearch-fdw**
 
 ```bash
 # Need python 2.7 and pip
@@ -51,7 +63,6 @@ logstash -f logstash-shipper.conf
 ```
 
 After run this config logstash will write all data in query in config and write to index of elasticsearch
-
 
 ## Step 3: Add elastic search connect to starter
 
