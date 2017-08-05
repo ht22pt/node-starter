@@ -2,8 +2,9 @@ CREATE EXTENSION multicorn;
 
 CREATE SERVER multicorn_es FOREIGN DATA WRAPPER multicorn
 OPTIONS (
-  wrapper 'dite.ElasticsearchFDW'
+  wrapper 'pg_es_fdw.ElasticsearchFDW'
 );
+-- wrapper 'pg_es_fdw.ElasticsearchFDW'
 
 CREATE TABLE articles (
     id serial PRIMARY KEY,
@@ -11,19 +12,38 @@ CREATE TABLE articles (
     content text NOT NULL,
     created_at timestamp
 );
-
+/*
 CREATE FOREIGN TABLE articles_es (
     id bigint,
     title text,
     content text
-) SERVER multicorn_es OPTIONS (host '127.0.0.1', port '9200', node : '/', index 'articles');
+) SERVER multicorn_es OPTIONS (host '127.0.0.1', port '9200', index 'articles');
 -- host '127.0.0.1', port '9200', node 'test', index 'articles' to connect to elastic search
 -- it will create node test with index articles
 -- connect to http://127.0.0.1:9200/test/articles/_search? .... for query data
+*/
+
+CREATE FOREIGN TABLE articles_es (
+    id bigint,
+    title text,
+    content text,
+    suggest JSON,
+    score NUMERIC
+) SERVER multicorn_es OPTIONS (
+  host '127.0.0.1',
+  port '9200',
+  index 'articles',
+  type 'article',
+  rowid_column 'id',
+  query_column 'title',
+  score_column 'score'
+  );
+
 
 -- Some functions for update data for elastic search index
 CREATE OR REPLACE FUNCTION index_article() RETURNS trigger AS $def$
 	BEGIN
+    -- Need add suggest here
 		INSERT INTO articles_es (id, title, content) VALUES
 			(NEW.id, NEW.title, NEW.content);
 		RETURN NEW;
@@ -32,6 +52,7 @@ $def$ LANGUAGE plpgsql;
 
 CREATE OR REPLACE FUNCTION reindex_article() RETURNS trigger AS $def$
 	BEGIN
+  -- Need add suggest here
 		UPDATE articles_es SET
 			title = NEW.title,
 			content = NEW.content
@@ -44,6 +65,12 @@ CREATE OR REPLACE FUNCTION delete_article() RETURNS trigger AS $def$
 	BEGIN
 		DELETE FROM articles_es a WHERE a.id = OLD.id;
 		RETURN OLD;
+    EXCEPTION
+      WHEN OTHERS THEN
+        BEGIN
+        raise notice 'delete_article exception';
+        RETURN OLD;
+      END;
 	END;
 $def$ LANGUAGE plpgsql;
 
