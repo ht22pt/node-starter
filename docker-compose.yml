@@ -31,6 +31,7 @@ services:
       - DATABASE_URL=postgres://postgres@127.0.0.1:5432/opla_demo1
       - DATABASE_DEBUG=false
       - REDIS_URL=redis://127.0.0.1:6379/0
+      - ELASTICSEARCH_PATH=http://localhost:9200
       - SESSION_SECRET=wZjwhFtzQsd7r87W6AZw45Sm
       - FACEBOOK_ID=749092561958564
       - FACEBOOK_SECRET=4fb6c3881d7d9921b0d41c9bab6b7638
