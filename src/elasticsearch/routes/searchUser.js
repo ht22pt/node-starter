@@ -5,7 +5,7 @@ import elastic from '../core';
 const router = express.Router();
 const elasticClient = elastic.elasticClient;
 
-const indexName = 'index3';
+const indexName = 'user';
 
 const mappingConfig = {
   index: indexName,
@@ -18,7 +18,6 @@ const mappingConfig = {
         type: 'completion',
         analyzer: 'simple',
         search_analyzer: 'simple',
-        payloads: true,
       },
     },
   },
@@ -33,8 +32,8 @@ function addDocument(document) {
       content: document.content,
       suggest: {
         input: document.title.split(' '),
-        output: document.title,
-        payload: document.metadata || {}
+        //output: document.title,
+        //payload: document.metadata || {}
       },
     },
   });
