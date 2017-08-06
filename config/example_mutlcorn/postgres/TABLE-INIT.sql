@@ -42,20 +42,29 @@ CREATE FOREIGN TABLE articles_es (
 
 -- Some functions for update data for elastic search index
 CREATE OR REPLACE FUNCTION index_article() RETURNS trigger AS $def$
+  DECLARE vSuggest jsonb;
+  DECLARE vArray text[];
 	BEGIN
     -- Need add suggest here
-		INSERT INTO articles_es (id, title, content) VALUES
-			(NEW.id, NEW.title, NEW.content);
+    vArray   = string_to_array(NEW.content, ' ');
+    vSuggest = jsonb_build_object('input', vArray);
+		INSERT INTO articles_es (id, title, content, suggest) VALUES
+			(NEW.id, NEW.title, NEW.content, vSuggest);
 		RETURN NEW;
 	END;
 $def$ LANGUAGE plpgsql;
 
 CREATE OR REPLACE FUNCTION reindex_article() RETURNS trigger AS $def$
+  DECLARE vSuggest jsonb;
+  DECLARE vArray text[];
 	BEGIN
   -- Need add suggest here
+    vArray   = string_to_array(NEW.content, ' ');
+    vSuggest = jsonb_build_object('input', vArray);
 		UPDATE articles_es SET
 			title = NEW.title,
-			content = NEW.content
+			content = NEW.content,
+      suggest = vSuggest
 		WHERE id = NEW.id;
 		RETURN NEW;
 	END;
