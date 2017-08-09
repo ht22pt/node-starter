@@ -27,5 +27,38 @@ See in folder config/logstash/dvdrental all config file in here
 ```
 ./logstash -f config/logstash/dvdrental/*.conf
 ```
+Have 4 config in this folder for support load all data to index in first time and each schedule will run with check timer
+
+**Note**: 
+  - Logstash will auto create index mapping when not found, but for the best mapping must create with elasticsearch in starter
+  - With db must create view with timestamp and suggest(type json)
+  - In case sql query too complex can be move to one sql file, and use **statement_filepath**, check in file config for correct path to sql file.
+
+  Example basic completion suggest of elastic search
+
+  ```json
+  {
+  suggest: {
+        input: ["Test", "Demo", "Example"],
+  }
+  ```
+  When elasticsearch send request
+
+  ```bash
+  POST films/_search?pretty
+  {
+    "suggest": {
+        "film-suggest" : {
+            "prefix" : "Tes",
+            "fuzzy" : true,
+            "completion" : {
+                "field" : "suggest"
+            }
+        }
+    }
+}
+  ```
+  Return will all records have input array match with "Tes", maybe Test, Testing ... and fuzzy will support correct spelling.
+
 
 
