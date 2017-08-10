@@ -29,6 +29,8 @@ import passport from './passport';
 import schema from './schema';
 import DataLoaders from './DataLoaders';
 import accountRoutes from './routes/account';
+import elasticSearchMapping from './elasticsearch/mapping';
+import postgraphql from 'postgraphql';
 
 i18next
   .use(LanguageDetector)
@@ -80,6 +82,18 @@ app.get('/graphql/schema', (req, res) => {
   res.type('text/plain').send(printSchema(schema));
 });
 
+
+const gql = express();
+
+gql.use(postgraphql(process.env.DATABASE_URL, {
+  graphiql: true,
+  graphqlRoute: '/gql/graphql',
+  graphiqlRoute: '/gql/graphiql',
+}));
+
+app.use(gql);
+
+/*
 app.use('/graphql', expressGraphQL(req => ({
   schema,
   context: {
@@ -96,38 +110,10 @@ app.use('/graphql', expressGraphQL(req => ({
     path: error.path,
   }),
 })));
+*/
 
 // For eslaticsearch
-var documents = require('./routes/documents');
-//......
-app.use('/documents', documents);
-var elastic = require('./elasticsearch');
-elastic.indexExists().then(function (exists) {
-  if (exists) {
-    return elastic.deleteIndex();
-  }
-}).then(function () {
-  return elastic.initIndex().then(elastic.initMapping).then(function () {
-    //Add a few titles for the autocomplete
-    //elasticsearch offers a bulk functionality as well, but this is for a different time
-    var promises = [
-      'Thing Explainer',
-      'The Internet Is a Playground',
-      'The Pragmatic Programmer',
-      'The Hitchhikers Guide to the Galaxy',
-      'Trial of the Clone'
-    ].map(function (bookTitle) {
-      return elastic.addDocument({
-        title: bookTitle,
-        content: bookTitle + " content",
-        metadata: {
-          titleLength: bookTitle.length
-        }
-      });
-    });
-    return Promise.all(promises);
-  });
-});
+app.use('/elasticsearch', elasticSearchMapping);
 
 // The following routes are intended to be used in development mode only
 if (process.env.NODE_ENV !== 'production') {
