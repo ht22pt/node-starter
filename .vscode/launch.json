@@ -41,7 +41,7 @@
     "sourceMaps": true,
     "env": {
       "CORS_ORIGIN":     "http://localhost:3001,http://localhost:3000",
-      "DATABASE_URL":    "postgres://postgres:demo@192.168.31.114:5432/opla_demo1",
+      "DATABASE_URL":    "postgres://postgres:postgres@localhost:5432/oplademo",
       "DATABASE_DEBUG":  "false",
       "REDIS_URL":       "redis://127.0.0.1:6379/0",
       "SESSION_SECRET":  "wZjwhFtzQsd7r87W6AZw45Sm",
@@ -51,7 +51,7 @@
       "GOOGLE_SECRET":   "HTFr0mQnNOumNFy0KIN6o3ip",
       "TWITTER_KEY":     "etKrqazREK5aJB3qHOgM72tyV",
       "TWITTER_SECRET":  "DAYNo97iSVlIwKrldVFFEuFwuo5JoNiyxQwPTPOuDLqvMcU9PE",
-      "ELASTIC_URL":     "192.168.31.125:9200"
+      "ELASTIC_URL":     "localhost:9200"
     }
   },
     {

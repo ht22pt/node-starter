@@ -30,6 +30,7 @@ import schema from './schema';
 import DataLoaders from './DataLoaders';
 import accountRoutes from './routes/account';
 import elasticSearchMapping from './elasticsearch/mapping';
+import postgraphql from 'postgraphql';
 
 i18next
   .use(LanguageDetector)
@@ -81,6 +82,18 @@ app.get('/graphql/schema', (req, res) => {
   res.type('text/plain').send(printSchema(schema));
 });
 
+
+const gql = express();
+
+gql.use(postgraphql(process.env.DATABASE_URL, {
+  graphiql: true,
+  graphqlRoute: '/gql/graphql',
+  graphiqlRoute: '/gql/graphiql',
+}));
+
+app.use(gql);
+
+/*
 app.use('/graphql', expressGraphQL(req => ({
   schema,
   context: {
@@ -97,6 +110,7 @@ app.use('/graphql', expressGraphQL(req => ({
     path: error.path,
   }),
 })));
+*/
 
 // For eslaticsearch
 app.use('/elasticsearch', elasticSearchMapping);
