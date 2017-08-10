@@ -5,11 +5,11 @@ import elastic from '../core';
 const router = express.Router();
 const elasticClient = elastic.elasticClient;
 
-const indexName = 'films';
+const indexName = 'articles';
 
 const mappingConfig = {
   index: indexName,
-  type: 'document',
+  type: 'article',
   body: {
     properties: {
       title: { type: 'string' },
@@ -17,7 +17,7 @@ const mappingConfig = {
       suggest: {
         type: 'completion',
         analyzer: 'simple',
-        search_analyzer: 'simple'
+        search_analyzer: 'simple',
       },
     },
   },
@@ -26,7 +26,7 @@ const mappingConfig = {
 function addDocument(document) {
   return elasticClient.index({
     index: indexName,
-    type: 'document',
+    type: 'articles',
     body: {
       title: document.title,
       content: document.content,
@@ -40,7 +40,7 @@ function addDocument(document) {
 function getSuggestions(input) {
   return elasticClient.suggest({
     index: indexName,
-    type: 'document',
+    type: 'articles',
     body: {
       docsuggest: {
         text: input,
@@ -69,29 +69,15 @@ router.post('/', (req, res) => {
 
 module.exports = router;
 
-// init default index
+// Check init Index and init mapping
 elastic.indexExists(indexName).then(function (exists) {
-  if (exists) {
-    return elastic.deleteIndex(indexName);
+  if (!exists) {
+    return elastic.initIndex(indexName).then(function () { return elastic.initMapping(mappingConfig); })
+  } else {
+    return elastic.initMapping(mappingConfig);
   }
-}).then(function () {
-  return elastic.initIndex(indexName).then(function () { return elastic.initMapping(mappingConfig) }).then(function () {
-    //Add a few titles for the autocomplete
-    //elasticsearch offers a bulk functionality as well, but this is for a different time
-    var promises = [
-      'Thing Explainer',
-      'The Internet Is a Playground',
-      'The Pragmatic Programmer',
-      'The Hitchhikers Guide to the Galaxy',
-      'The Hitchhikers Guide to the Galaxy',
-      'Trial of the Clone'
-    ].map(function (bookTitle) {
-      return addDocument({
-        title: bookTitle,
-        content: bookTitle + " content",
-      });
-    });
-    return Promise.all(promises);
-  });
+}).then(function(result){
+  console.log(result);
+}).catch(function(err){
+  console.log(err);
 });
-

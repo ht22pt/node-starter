@@ -5,7 +5,7 @@ import elastic from '../core';
 const router = express.Router();
 const elasticClient = elastic.elasticClient;
 
-const indexName = 'user';
+const indexName = 'customers';
 
 const mappingConfig = {
   index: indexName,

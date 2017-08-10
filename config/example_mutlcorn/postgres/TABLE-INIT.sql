@@ -34,7 +34,7 @@ CREATE FOREIGN TABLE articles_es (
     suggest JSON,
     score NUMERIC
 ) SERVER multicorn_es OPTIONS (
-  host '127.0.0.1',
+  host '192.168.31.125',
   port '9200',
   index 'articles',
   type 'article',
