@@ -24,3 +24,7 @@ set TWITTER_KEY=OcHCaDqUhjXMIIKKjkBIG7EDr
 set TWITTER_SECRET=4svE6BRCdUfUjjloRAX5KNjVZ5qnOsrbTtojmbENAZ5rpjfSyM
 
 CORS_ORIGIN="http://localhost:3000" DATABASE_URL="postgres://postgres@127.0.0.1:5432/opla_demo1" DATABASE_DEBUG=false REDIS_URL="redis://127.0.0.1:6379/0" SESSION_SECRET=wZjwhFtzQsd7r87W6AZw45Sm FACEBOOK_ID=749092561958564 FACEBOOK_SECRET=4fb6c3881d7d9921b0d41c9bab6b7638 GOOGLE_ID=536447408233-apfaoam0s2o9auul70bjfotu5b7def18.apps.googleusercontent.com GOOGLE_SECRET=AEBnNpaMxVxVlvNyzJwBdoJw TWITTER_KEY=OcHCaDqUhjXMIIKKjkBIG7EDr TWITTER_SECRET=4svE6BRCdUfUjjloRAX5KNjVZ5qnOsrbTtojmbENAZ5rpjfSyM node ./build/server.js
+
+https://github.com/postgraphql/postgraphql/issues/346
+https://technicallyrural.ca/2017/06/11/authentication-and-authoriazation-with-express-postgraphql-server/
+https://blog.octo.com/en/graphql-a-new-actor-in-the-api-world/
