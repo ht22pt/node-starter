@@ -9,6 +9,7 @@
 
 /* @flow */
 
+import fs from 'fs';
 import path from 'path';
 import express from 'express';
 import cors from 'cors';
@@ -17,6 +18,8 @@ import bodyParser from 'body-parser';
 import session from 'express-session';
 import connectRedis from 'connect-redis';
 import flash from 'express-flash';
+import https from 'https';
+import http from 'http';
 import i18next from 'i18next';
 import i18nextMiddleware, { LanguageDetector } from 'i18next-express-middleware';
 import i18nextBackend from 'i18next-node-fs-backend';
@@ -47,6 +50,11 @@ i18next
       addPath: path.resolve(__dirname, '../locales/{{lng}}/{{ns}}.missing.json'),
     },
   });
+
+const https_options = {
+    key: fs.readFileSync(__dirname +'/../keys/ssl-key.pem'),
+    cert: fs.readFileSync(__dirname +'/../keys/ssl-cert.pem')
+  };
 
 const app = express();
 
@@ -85,11 +93,25 @@ app.get('/graphql/schema', (req, res) => {
 
 const gql = express();
 
-gql.use(postgraphql(process.env.DATABASE_URL, {
-  graphiql: true,
-  graphqlRoute: '/gql/graphql',
-  graphiqlRoute: '/gql/graphiql',
-}));
+const postgresConfig = {
+  user: process.env.POSTGRES_USERNAME,
+  password: process.env.POSTGRES_PASSWORD,
+  host: process.env.POSTGRES_HOST,
+  port: process.env.POSTGRES_PORT,
+  database: process.env.POSTGRES_DATABASE,
+};
+
+gql.use(postgraphql(
+  postgresConfig,
+  process.env.POSTGRAPHQL_SCHEMA, {
+    graphiql: true,
+    graphqlRoute: '/gql/graphql',
+    graphiqlRoute: '/gql/graphiql',
+    watchPg: true,
+    jwtPgTypeIdentifier: `${process.env.POSTGRAPHQL_SCHEMA}.jwt`,
+    jwtSecret: process.env.JWT_SECRET,
+    pgDefaultRole: process.env.POSTGRAPHQL_DEFAULT_ROLE,
+  }));
 
 app.use(gql);
 
