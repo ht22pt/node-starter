@@ -23,7 +23,15 @@
       "GOOGLE_SECRET":   "HTFr0mQnNOumNFy0KIN6o3ip",
       "TWITTER_KEY":     "etKrqazREK5aJB3qHOgM72tyV",
       "TWITTER_SECRET":  "DAYNo97iSVlIwKrldVFFEuFwuo5JoNiyxQwPTPOuDLqvMcU9PE",
-      "ELASTIC_URL":     "localhost:9200"
+      "ELASTIC_URL":     "localhost:9200",
+      "POSTGRES_USERNAME" : "auth_postgraphql",
+      "POSTGRES_PASSWORD" : "password",
+      "POSTGRES_HOST"     : "localhost",
+      "POSTGRES_PORT"     : "5432",
+      "POSTGRES_DATABASE" : "authdemo",
+      "POSTGRAPHQL_SCHEMA": "auth_public",
+      "JWT_SECRET": "super_secret",
+      "POSTGRAPHQL_DEFAULT_ROLE": "auth_anonymous"
     }
   },
     {
@@ -51,7 +59,15 @@
       "GOOGLE_SECRET":   "HTFr0mQnNOumNFy0KIN6o3ip",
       "TWITTER_KEY":     "etKrqazREK5aJB3qHOgM72tyV",
       "TWITTER_SECRET":  "DAYNo97iSVlIwKrldVFFEuFwuo5JoNiyxQwPTPOuDLqvMcU9PE",
-      "ELASTIC_URL":     "localhost:9200"
+      "ELASTIC_URL":     "localhost:9200",
+      "POSTGRES_USERNAME" : "auth_postgraphql",
+      "POSTGRES_PASSWORD" : "password",
+      "POSTGRES_HOST"     : "localhost",
+      "POSTGRES_PORT"     : "5432",
+      "POSTGRES_DATABASE" : "opla",
+      "POSTGRAPHQL_SCHEMA": "opla_public",
+      "JWT_SECRET": "super_secret",
+      "POSTGRAPHQL_DEFAULT_ROLE": "auth_anonymous",
     }
   },
     {
