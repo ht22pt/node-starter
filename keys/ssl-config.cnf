@@ -1,0 +1,21 @@
+# SSL Config
+[ req ]
+distinguished_name    = req_distinguished_name
+
+dirstring_type = nobmp
+
+[ req_distinguished_name ]
+countryName            = Viet Nam
+countryName_default    = VN
+countryName_min        = 2
+countryName_max        = 2
+
+localityName            = Ho Chi Minh
+
+organizationalUnitName        = Opla
+
+commonName            = Opla
+commonName_max            = 64
+
+emailAddress            = thanh.nguyen105@outlook.com.vn
+emailAddress_max        = 40
