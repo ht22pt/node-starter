@@ -31,7 +31,9 @@
       "POSTGRES_DATABASE" : "authdemo",
       "POSTGRAPHQL_SCHEMA": "auth_public",
       "JWT_SECRET": "super_secret",
-      "POSTGRAPHQL_DEFAULT_ROLE": "auth_anonymous"
+      "POSTGRAPHQL_DEFAULT_ROLE": "auth_anonymous",
+      "HTTPS": "true",
+      "KEYS_PATH": "keys"
     }
   },
     {
@@ -68,6 +70,8 @@
       "POSTGRAPHQL_SCHEMA": "opla_public",
       "JWT_SECRET": "super_secret",
       "POSTGRAPHQL_DEFAULT_ROLE": "auth_anonymous",
+      "HTTPS": "true",
+      "KEYS_PATH": "keys"
     }
   },
     {

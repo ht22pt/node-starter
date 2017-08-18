@@ -10,6 +10,10 @@
 /* @flow */
 /* eslint-disable no-console, no-shadow */
 
+import https from 'https';
+import http from 'http';
+import fs from 'fs';
+
 import app from './app';
 import db from './db';
 import redis from './redis';
@@ -17,11 +21,35 @@ import elasticsearch from './elasticsearch';
 
 const port = process.env.PORT || 80;
 const host = process.env.HOSTNAME || '0.0.0.0';
+const keysPath = process.env.KEYS_PATH || '';
+let useHttps = (keysPath !== '' && process.env.HTTPS !== 'false');
+
+let key, cert;
+
+if (useHttps) {
+  try {
+    key = fs.readFileSync(keysPath + '/ssl-key.pem');
+    cert = fs.readFileSync(keysPath + '/ssl-cert.pem');
+  } catch(err) {
+    useHttps = false;
+  }
+}
 
 // Launch Node.js server
-const server = app.listen(port, host, () => {
-  console.log(`Node.js API server is listening on http://${host}:${port}/`);
-});
+let server = null;
+if (useHttps) {
+  let https_options = {
+    key: key,
+    cert: cert
+  };
+  server = https.createServer(https_options, app).listen(port, host);
+  console.log(`Node.js API server HTTPS is listening on https://${host}:${port}/`);
+} else {
+  server = app.listen(port, host, () => {
+    console.log(`Node.js API server HTTP is listening on http://${host}:${port}/`);
+  });
+}
+
 
 // Shutdown Node.js app gracefully
 function handleExit(options, err) {
