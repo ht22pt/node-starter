@@ -18,8 +18,6 @@ import bodyParser from 'body-parser';
 import session from 'express-session';
 import connectRedis from 'connect-redis';
 import flash from 'express-flash';
-import https from 'https';
-import http from 'http';
 import i18next from 'i18next';
 import i18nextMiddleware, { LanguageDetector } from 'i18next-express-middleware';
 import i18nextBackend from 'i18next-node-fs-backend';
@@ -50,11 +48,6 @@ i18next
       addPath: path.resolve(__dirname, '../locales/{{lng}}/{{ns}}.missing.json'),
     },
   });
-
-const https_options = {
-    key: fs.readFileSync(__dirname +'/../keys/ssl-key.pem'),
-    cert: fs.readFileSync(__dirname +'/../keys/ssl-cert.pem')
-  };
 
 const app = express();
 
